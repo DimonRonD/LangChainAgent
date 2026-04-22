@@ -48,14 +48,36 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 @tool
+def add(a: float, b: float) -> float:
+    """Складывает два числа a и b."""
+    return a + b
+
+@tool
+def subtract(a: float, b: float) -> float:
+    """Вычитает b из a."""
+    return a - b
+
+@tool
 def divide(a: int, b: int) -> float:
     """Делит a на b."""
     if b == 0:
         raise ValueError("Деление на ноль невозможно.")
     return a / b
 
+@tool
+def power(a: float, b: float) -> float:
+    """Возводит a в степень b."""
+    return a ** b
+
+@tool
+def sqrt(a: float) -> float:
+    """Извлекает квадратный корень из a."""
+    if a < 0:
+        raise ValueError("Нельзя извлечь квадратный корень из отрицательного числа.")
+    return a ** 0.5
+
 # 3) Собираем агента
-TOOLS = [multiply, divide]
+TOOLS = [multiply, add, subtract, divide, power, sqrt]
 TOOL_BY_NAME = {tool_.name: tool_ for tool_ in TOOLS}
 agent = build_agent(llm, tools=TOOLS)
 
@@ -122,7 +144,7 @@ def ask_agent(text: str) -> str:
 
 # 4) Интерактивный режим
 print("Локальный агент запущен ✅")
-print("Примеры: 'Сколько будет 7 умножить на 8?' или '22 разделить на 11'")
+print("Примеры: '2 плюс 3', '10 минус 4', '5 в степени 3', 'корень из 81'")
 print("Выход: exit / quit\n")
 
 while True:
